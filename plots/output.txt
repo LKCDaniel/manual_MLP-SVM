@@ -1,0 +1,89 @@
+"C:\Program Files\Python312\python.exe" "C:\Users\18611\Desktop\Final Assessment\MLP_face.py" 
+
+----------------------------------------------------------------------
+Start training MLP: 5 fold, regularization: None, lr: 0.1, hidden layers: 256, early stopping: 300, gamma: 0.99 ...
+Fold 1/5:  19%|█▉        | 972/5000 [40:13<2:46:41,  2.48s/it, lr=0.000006, test_acc=0.1425, test_loss=9.2799, train_acc=0.7594, train_loss=1.6913]
+Early stopping at epoch 973
+Weights are taken from the best epoch:672, test accuracy = 0.145503, train accuracy = 0.511665
+Fold 2/5:  22%|██▏       | 1117/5000 [45:57<2:39:45,  2.47s/it, lr=0.000001, test_acc=0.1387, test_loss=9.6537, train_acc=0.8590, train_loss=1.1297]
+Early stopping at epoch 1118
+Weights are taken from the best epoch:817, test accuracy = 0.142857, train accuracy = 0.633324
+Fold 3/5:  21%|██        | 1034/5000 [42:38<2:43:31,  2.47s/it, lr=0.000003, test_acc=0.1379, test_loss=9.5811, train_acc=0.8082, train_loss=1.4125]
+Early stopping at epoch 1035
+Weights are taken from the best epoch:734, test accuracy = 0.139834, train accuracy = 0.568905
+Fold 4/5:  18%|█▊        | 906/5000 [37:19<2:48:40,  2.47s/it, lr=0.000011, test_acc=0.1493, test_loss=8.9066, train_acc=0.7035, train_loss=2.0050]
+Early stopping at epoch 907
+Weights are taken from the best epoch:606, test accuracy = 0.149660, train accuracy = 0.455275
+Fold 5/5:  27%|██▋       | 1370/5000 [56:20<2:29:18,  2.47s/it, lr=0.000000, test_acc=0.1280, test_loss=10.3738, train_acc=0.9588, train_loss=0.5389]
+Early stopping at epoch 1371
+Weights are taken from the best epoch:1070, test accuracy = 0.131748, train accuracy = 0.825869
+Cross-validation results:
+test accuracy: 0.1419 ± 0.0060, train accuracy: 0.5990 ± 0.1279
+Training time: 222 mins, 32 seconds.
+
+----------------------------------------------------------------------
+Start training MLP: 5 fold, regularization: L1, lr: 0.1, hidden layers: 256, early stopping: 300, gamma: 0.99 ...
+Fold 1/5:  11%|█         | 334/3000 [13:45<1:49:48,  2.47s/it, lr=0.003485, test_acc=0.0420, test_loss=8.5388, train_acc=0.0396, train_loss=8.5393]
+Early stopping at epoch 335
+Weights are taken from the best epoch:34, test accuracy = 0.051398, train accuracy = 0.051006
+Fold 2/5:  11%|█         | 329/3000 [13:33<1:50:07,  2.47s/it, lr=0.003664, test_acc=0.0423, test_loss=8.5506, train_acc=0.0395, train_loss=8.5537]
+Early stopping at epoch 330
+Weights are taken from the best epoch:29, test accuracy = 0.053666, train accuracy = 0.051478
+Fold 3/5:  11%|█         | 328/3000 [13:31<1:50:09,  2.47s/it, lr=0.003701, test_acc=0.0416, test_loss=8.5502, train_acc=0.0397, train_loss=8.5510]
+Early stopping at epoch 329
+Weights are taken from the best epoch:28, test accuracy = 0.052532, train accuracy = 0.051667
+Fold 4/5:  11%|█         | 327/3000 [13:28<1:50:06,  2.47s/it, lr=0.003739, test_acc=0.0446, test_loss=8.5434, train_acc=0.0389, train_loss=8.5509]
+Early stopping at epoch 328
+Weights are taken from the best epoch:27, test accuracy = 0.053288, train accuracy = 0.052139
+Fold 5/5:  11%|█         | 331/3000 [13:36<1:49:47,  2.47s/it, lr=0.003591, test_acc=0.0298, test_loss=8.5558, train_acc=0.0426, train_loss=8.5234]
+Early stopping at epoch 332
+Weights are taken from the best epoch:31, test accuracy = 0.040015, train accuracy = 0.056784
+Cross-validation results:
+test accuracy: 0.0502 ± 0.0051, train accuracy: 0.0526 ± 0.0021
+Training time: 67 mins, 58 seconds.
+
+----------------------------------------------------------------------
+Start training MLP: 5 fold, regularization: L2, lr: 0.1, hidden layers: 256, early stopping: 300, gamma: 0.99 ...
+Fold 1/5:  78%|███████▊  | 2326/3000 [1:41:49<29:30,  2.63s/it, lr=0.000000, test_acc=0.1769, test_loss=8.3854, train_acc=0.9911, train_loss=0.7524]
+Early stopping at epoch 2327
+Weights are taken from the best epoch:2026, test accuracy = 0.178005, train accuracy = 0.986871
+Fold 2/5:  70%|███████   | 2103/3000 [1:32:46<39:34,  2.65s/it, lr=0.000000, test_acc=0.1686, test_loss=8.5527, train_acc=0.9890, train_loss=0.7806]
+Early stopping at epoch 2104
+Weights are taken from the best epoch:1803, test accuracy = 0.170824, train accuracy = 0.976764
+Fold 3/5:  64%|██████▍   | 1922/3000 [1:24:26<47:21,  2.64s/it, lr=0.000000, test_acc=0.1678, test_loss=8.7136, train_acc=0.9838, train_loss=0.8122]
+Early stopping at epoch 1923
+Weights are taken from the best epoch:1622, test accuracy = 0.168934, train accuracy = 0.969774
+Fold 4/5:  77%|███████▋  | 2320/3000 [1:47:08<31:24,  2.77s/it, lr=0.000000, test_acc=0.1701, test_loss=8.5218, train_acc=0.9671, train_loss=0.7792]
+Early stopping at epoch 2321
+Weights are taken from the best epoch:2020, test accuracy = 0.183296, train accuracy = 0.986587
+Fold 5/5:  75%|███████▍  | 2247/3000 [1:34:31<31:40,  2.52s/it, lr=0.000000, test_acc=0.1661, test_loss=8.5764, train_acc=0.9897, train_loss=0.7649]
+Early stopping at epoch 2248
+Weights are taken from the best epoch:1947, test accuracy = 0.168365, train accuracy = 0.944255
+Cross-validation results:
+test accuracy: 0.1739 ± 0.0058, train accuracy: 0.9729 ± 0.0157
+Training time: 480 mins, 46 seconds.
+
+----------------------------------------------------------------------
+Start training MLP: 5 fold, regularization: L2, lr: 0.1, hidden layers: 512, early stopping: 300, gamma: 0.99 ...
+Fold 1/5:  45%|████▌     | 1359/3000 [1:10:35<1:25:14,  3.12s/it, lr=0.000000, test_acc=0.1788, test_loss=8.5124, train_acc=0.9803, train_loss=0.8509]
+Early stopping at epoch 1360
+Weights are taken from the best epoch:1059, test accuracy = 0.182162, train accuracy = 0.942949
+Fold 2/5:  42%|████▏     | 1268/3000 [1:11:01<1:37:01,  3.36s/it, lr=0.000000, test_acc=0.1670, test_loss=8.5659, train_acc=0.9786, train_loss=0.8892]
+Early stopping at epoch 1269
+Weights are taken from the best epoch:968, test accuracy = 0.168934, train accuracy = 0.923680
+Fold 3/5:  68%|██████▊   | 2045/3000 [1:55:14<53:48,  3.38s/it, lr=0.000000, test_acc=0.1678, test_loss=8.6233, train_acc=0.9947, train_loss=0.7123]
+Early stopping at epoch 2046
+Weights are taken from the best epoch:1745, test accuracy = 0.170446, train accuracy = 0.992538
+Fold 4/5:  62%|██████▏   | 1858/3000 [1:44:11<1:04:02,  3.36s/it, lr=0.000000, test_acc=0.1829, test_loss=8.4582, train_acc=0.9940, train_loss=0.7319]
+Early stopping at epoch 1859
+Weights are taken from the best epoch:1558, test accuracy = 0.186697, train accuracy = 0.985076
+Fold 5/5:  54%|█████▎    | 1609/3000 [1:30:29<1:18:14,  3.37s/it, lr=0.000000, test_acc=0.1653, test_loss=8.5940, train_acc=0.9869, train_loss=0.7760]
+Early stopping at epoch 1610
+Weights are taken from the best epoch:1309, test accuracy = 0.169498, train accuracy = 0.974584
+Cross-validation results:
+test accuracy: 0.1755 ± 0.0074, train accuracy: 0.9638 ± 0.0262
+Training time: 451 mins, 37 seconds.
+
+----------------------------------------------------------------------
+Start training MLP: 5 fold, regularization: L2, lr: 0.1, hidden layers: 1024, early stopping: 300, gamma: 0.99 ...
+Fold 1/5:  24%|██▎       | 711/3000 [57:29<3:11:33,  5.02s/it, lr=0.000079, test_acc=0.1674, test_loss=8.4088, train_acc=0.9187, train_loss=1.3439]
