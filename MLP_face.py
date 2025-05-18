@@ -305,7 +305,7 @@ def main():
             accumulate += percentage
 
 
-    min_per_class = 100 # 30, 50, 100, 200
+    min_per_class = 50 # 30, 50, 100, 200
 
     dataset, labels = [], []
     for data, label in zip(flw_people['data'], flw_people['target']):
@@ -314,10 +314,38 @@ def main():
             labels.append(label)
 
     dataloader = Dataloader(dataset, labels, fold=5)
-    mlp = MLP(dataloader, hidden_size=256, regularization='L1', lambda_reg=0.01,
-              fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
-    mlp.train(cross_val=False)
 
+    mlp = MLP(dataloader, hidden_size=16, regularization='L2', lambda_reg=0.01,
+              fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
+    mlp.train(cross_val=True)
+
+    # mlp = MLP(dataloader, hidden_size=32, regularization='L2', lambda_reg=0.01,
+    #           fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
+    # mlp.train(cross_val=True)
+    #
+    # mlp = MLP(dataloader, hidden_size=64, regularization='L2', lambda_reg=0.01,
+    #           fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
+    # mlp.train(cross_val=True)
+    #
+    # mlp = MLP(dataloader, hidden_size=128, regularization='L2', lambda_reg=0.01,
+    #           fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
+    # mlp.train(cross_val=True)
+    #
+    # mlp = MLP(dataloader, hidden_size=256, regularization='L2', lambda_reg=0.01,
+    #           fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
+    # mlp.train(cross_val=True)
+    #
+    #
+    # for lr in [0.1, 0.01, 0.001]:
+    #     for gamma in [1, 0.99, 0.98]:
+    #         mlp = MLP(dataloader, hidden_size=64, regularization='L2', lambda_reg=0.01,
+    #                   fold=5, lr=lr, max_epoch=3000, early=300, gamma=gamma)
+    #         mlp.train(cross_val=False)
+
+    # for reg in ['', 'L1', 'L2']:
+    #     mlp = MLP(dataloader, hidden_size=64, regularization=reg, lambda_reg=0.01,
+    #               fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
+    #     mlp.train(cross_val=True)
 
 
 
