@@ -8,6 +8,7 @@ from tqdm import tqdm
 
 np.random.seed(int(time.time()))
 
+
 class Dataloader:
     def __init__(self, datas, targets, fold=5, shuffle=True):
         self.fold = fold
@@ -18,6 +19,12 @@ class Dataloader:
             datas = np.array(datas, dtype=float)
         if isinstance(targets, list):
             targets = np.array(targets, dtype=int)
+
+        # remap targets to 0, 1, 2, ...
+        unique_targets = np.unique(targets)
+        target_map = {old: new for new, old in enumerate(unique_targets)}
+        for i in range(len(targets)):
+            targets[i] = target_map[targets[i]]
 
         if shuffle:
             index = np.arange(len(datas))
@@ -153,14 +160,16 @@ class MLP:
         y_true = np.argmax(y_true, axis=1)
         return np.mean(y_pred == y_true)
 
-    def train(self):
+    def train(self, cross_val=True):
         start = time.time()
         cross_val_train_acc, cross_val_test_acc = [], []
         print(f"\n----------------------------------------------------------------------\n"
-              f"Start training MLP: {self.fold} fold, regularization: {self.regularization}, lr: {self.lr}, "
+              f"Start training MLP: {self.fold if cross_val else f'{100/self.fold:.2f}% testset, no'} fold, regularization: {self.regularization}, lr: {self.lr}, "
               f"hidden layers: {self.hidden_size}, early stopping: {self.early}, gamma: {self.gamma} ...")
 
         for cross_fold_i in range(self.fold):
+            if not cross_val and cross_fold_i != 0:
+                break
             self.initialize_weights()
             lr = self.lr
 
@@ -174,7 +183,7 @@ class MLP:
             not_improved = 0
 
             bar = tqdm(range(self.max_epoch))
-            bar.set_description(f"Fold {cross_fold_i + 1}/{self.fold}")
+            bar.set_description(f"{f'Fold {cross_fold_i + 1}/{self.fold}' if cross_val else ''}")
             for epoch in bar:
                 y_pred = self.forward(train_data)
                 self.back_prop(train_target)
@@ -258,9 +267,9 @@ class MLP:
             plt.show()
 
         duration = time.time() - start
-        print(f'Cross-validation results:\n'
-              f'test accuracy: {np.mean(cross_val_test_acc):.4f} ± {np.std(cross_val_test_acc):.4f}, '
-              f'train accuracy: {np.mean(cross_val_train_acc):.4f} ± {np.std(cross_val_train_acc):.4f}')
+        print(f'{'Cross-validation results:\n' if cross_val else ''}'
+              f'test accuracy: {np.mean(cross_val_test_acc):.4f}{f' ± {np.std(cross_val_test_acc):.4f}' if cross_val else ''}, '
+              f'train accuracy: {np.mean(cross_val_train_acc):.4f}{f' ± {np.std(cross_val_train_acc):.4f}' if cross_val else ''}')
         print(f'Training time: {duration // 60:.0f} mins, {duration % 60:.0f} seconds.')
 
 
@@ -268,26 +277,46 @@ def main():
     with open(os.path.join('LFW dataset', 'lfw.pkl'), 'rb') as file:
         flw_people = pickle.load(file)  # ['data', 'images', 'target', 'target_names', 'DESCR']
 
-    dataloader = Dataloader(flw_people['data'], flw_people['target'], fold=5)
-    mlp = MLP(dataloader, hidden_size=256, regularization=None,
-              fold=5, lr=0.1, max_epoch=5000, early=300, gamma=0.99)
-    mlp.train()
+    print(f'Data shape: {flw_people["data"].shape}')  # (13233, 2914)
+    print(f'Target shape: {flw_people["target"].shape}')  # (13233,)
+    print(f'Target_names shape: {flw_people["target_names"].shape}')  # (5749,)
 
+    num_class = len(flw_people['target_names'])
+    instance_num = len(flw_people['target'])
+
+    num_per_classes = np.zeros(num_class)
+    for label in flw_people['target']:
+        num_per_classes[label] += 1
+
+    histogram = np.zeros(instance_num)
+    for num_per_class in num_per_classes:
+        histogram[int(num_per_class)] += 1
+
+    max_frequency = np.max(np.where(histogram != 0))
+    histogram = histogram[:max_frequency + 1]
+
+    print('frequency - classes - percentage - accumulate')
+    accumulate = 0.0
+    for i, f in enumerate(histogram):
+        if f != 0:
+            percentage = f * i * 100 / instance_num
+            print(f'{i} - {f:.0f} - {percentage:.2f}% - {100 - accumulate:.2f}%')
+            accumulate += percentage
+
+
+    min_per_class = 100 # 30, 50, 100, 200
+
+    dataset, labels = [], []
+    for data, label in zip(flw_people['data'], flw_people['target']):
+        if num_per_classes[label] > min_per_class:
+            dataset.append(data)
+            labels.append(label)
+
+    dataloader = Dataloader(dataset, labels, fold=5)
     mlp = MLP(dataloader, hidden_size=256, regularization='L1', lambda_reg=0.01,
               fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
-    mlp.train()
+    mlp.train(cross_val=False)
 
-    mlp = MLP(dataloader, hidden_size=256, regularization='L2', lambda_reg=0.01,
-              fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
-    mlp.train()
-
-    mlp = MLP(dataloader, hidden_size=512, regularization='L2', lambda_reg=0.01,
-              fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
-    mlp.train()
-
-    mlp = MLP(dataloader, hidden_size=1024, regularization='L2', lambda_reg=0.01,
-              fold=5, lr=0.1, max_epoch=3000, early=300, gamma=0.99)
-    mlp.train()
 
 
 
