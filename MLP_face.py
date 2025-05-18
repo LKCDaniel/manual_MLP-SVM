@@ -267,9 +267,10 @@ class MLP:
             plt.show()
 
         duration = time.time() - start
-        print(f'{'Cross-validation results:\n' if cross_val else ''}'
-              f'test accuracy: {np.mean(cross_val_test_acc):.4f}{f' ± {np.std(cross_val_test_acc):.4f}' if cross_val else ''}, '
-              f'train accuracy: {np.mean(cross_val_train_acc):.4f}{f' ± {np.std(cross_val_train_acc):.4f}' if cross_val else ''}')
+        if cross_val:
+            print('Cross-validation results:\n')
+        print(f'test accuracy: {np.mean(cross_val_test_acc):.4f}{f" ± {np.std(cross_val_test_acc):.4f}" if cross_val else ""}, '
+              f'train accuracy: {np.mean(cross_val_train_acc):.4f}{f" ± {np.std(cross_val_train_acc):.4f}" if cross_val else ""}')
         print(f'Training time: {duration // 60:.0f} mins, {duration % 60:.0f} seconds.')
 
 
